@@ -1,5 +1,5 @@
-#ifndef ImpactParameter_TrackCountingComputer_h
-#define ImpactParameter_TrackCountingComputer_h
+#ifndef ImpactParameter_ShrinkConeTrackCountingComputer_h
+#define ImpactParameter_ShrinkConeTrackCountingComputer_h
 
 #include "DataFormats/TrackReco/interface/Track.h"
 #include "DataFormats/VertexReco/interface/Vertex.h"
@@ -8,10 +8,12 @@
 #include "Math/GenVector/VectorUtil.h"
 #include "RecoBTau/JetTagComputer/interface/JetTagComputer.h"
 
-class TrackCountingComputer : public JetTagComputer
+#include "TF1.h"
+
+class ShrinkConeTrackCountingComputer : public JetTagComputer
 {
  public:
-  TrackCountingComputer(const edm::ParameterSet  & parameters )
+  ShrinkConeTrackCountingComputer(const edm::ParameterSet  & parameters )
   {
      m_nthTrack         = parameters.getParameter<int>("nthTrack");
      m_ipType           = parameters.getParameter<int>("impactParameterType");
@@ -29,6 +31,9 @@ class TrackCountingComputer : public JetTagComputer
 	 trackQualityType == "ANY" ) m_useAllQualities = true;
 
      uses("ipTagInfos");
+
+     // my cone function (x<100.: 0.5, x>1000: 0.1, else: linear scaling)
+     m_coneFunc = TF1("my_cone_func", "(x<100.)? 0.51 : ((x>1000.)? 0.1 : (100.-x)*4./9000.+0.5)", 0., 1000.);
   }
   
  
@@ -59,7 +64,7 @@ class TrackCountingComputer : public JetTagComputer
 		 (m_useAllQualities  == true || (*tracks[i]).quality(m_trackQuality)) // use selected track qualities
              )
 	     {
-                if(m_deltaR <=0  || ROOT::Math::VectorUtil::DeltaR((*tkip.jet()).p4().Vect(), (*tracks[i]).momentum()) < m_deltaR)
+                if(ROOT::Math::VectorUtil::DeltaR((*tkip.jet()).p4().Vect(), (*tracks[i]).momentum()) < m_coneFunc.Eval((*tkip.jet()).pt()))
                  significances.insert( ((m_ipType==0)?it->ip3d:it->ip2d).significance() );
               }
           }
@@ -76,6 +81,9 @@ class TrackCountingComputer : public JetTagComputer
    double m_cutMaxDistToAxis;
    reco::TrackBase::TrackQuality   m_trackQuality;
    bool m_useAllQualities;
+
+   // my cone function
+   TF1 m_coneFunc;
 };
 
-#endif // ImpactParameter_TrackCountingComputer_h
+#endif // ImpactParameter_ShrinkConeTrackCountingComputer_h

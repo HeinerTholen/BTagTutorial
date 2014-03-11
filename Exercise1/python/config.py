@@ -28,6 +28,21 @@ process.MyTrackCountingHighEffBJetTags = process.trackCountingHighEffBJetTags.cl
     tagInfos = cms.VInputTag(cms.InputTag("MyImpactParameterPFTagInfos"))
 )
 
+process.load("BTagTutorial.Exercise1.shrinkConeTrackCountingHighEffBJetTags_cfi")
+process.MyShrinkConeTrackCountingHighEffBJetTags = process.shrinkConeTrackCountingHighEffBJetTags.clone(
+    tagInfos = cms.VInputTag(cms.InputTag("MyImpactParameterPFTagInfos"))
+)
+
+process.load("BTagTutorial.Exercise1.trackCountingSuperHighEffBJetTags_cfi")
+process.MyTrackCountingSuperHighEffBJetTags = process.trackCountingSuperHighEffBJetTags.clone(
+    tagInfos = cms.VInputTag(cms.InputTag("MyImpactParameterPFTagInfos"))
+)
+
+process.load("BTagTutorial.Exercise1.trackCountingSuperHighPurBJetTags_cfi")
+process.MyTrackCountingSuperHighPurBJetTags = process.trackCountingSuperHighPurBJetTags.clone(
+    tagInfos = cms.VInputTag(cms.InputTag("MyImpactParameterPFTagInfos"))
+)
+
 process.MySecondaryVertexTagInfos = process.secondaryVertexTagInfos.clone(
     trackIPTagInfos = cms.InputTag("MyImpactParameterPFTagInfos")
 )
@@ -65,6 +80,21 @@ process.MybTagValidation = process.bTagValidation.clone(
             folder = cms.string("TCHE")
         ),
   cms.PSet(
+            process.bTagTrackCountingAnalysisBlock,
+            label = cms.InputTag("MyShrinkConeTrackCountingHighEffBJetTags"),
+            folder = cms.string("SCTCHE")
+        ),
+  cms.PSet(
+            process.bTagTrackCountingAnalysisBlock,
+            label = cms.InputTag("MyTrackCountingSuperHighEffBJetTags"),
+            folder = cms.string("SCTCHE")
+        ),
+  cms.PSet(
+            process.bTagTrackCountingAnalysisBlock,
+            label = cms.InputTag("MyTrackCountingSuperHighPurBJetTags"),
+            folder = cms.string("SCTCHE")
+        ),
+  cms.PSet(
             process.bTagSimpleSVAnalysisBlock,
             label = cms.InputTag("MySimpleSecondaryVertexHighEffBJetTags"),
             folder = cms.string("SimpleSVHE")
@@ -86,6 +116,9 @@ process.plots = cms.Path(
     process.MyImpactParameterPFTagInfos *
     process.MySecondaryVertexTagInfos *
     process.MyTrackCountingHighEffBJetTags *
+    process.MyShrinkConeTrackCountingHighEffBJetTags *
+    process.MyTrackCountingSuperHighEffBJetTags *
+    process.MyTrackCountingSuperHighPurBJetTags *
     process.MySimpleSecondaryVertexHighEffBJetTags *
     process.myPartons *
     process.AK5PFbyRef *

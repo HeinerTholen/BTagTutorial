@@ -1,6 +1,7 @@
 #include "FWCore/Framework/interface/ModuleFactory.h"
 #include "FWCore/Framework/interface/MakerMacros.h"
 
+#include "RecoBTau/JetTagComputer/interface/JetTagComputerESProducer.h"
 #include "BTagTutorial/Exercise1/interface/ShrinkConeTrackCountingComputer.h"
 
 typedef JetTagComputerESProducer<ShrinkConeTrackCountingComputer> ShrinkConeTrackCountingESProducer;

@@ -38,6 +38,10 @@ process.MyTrackCountingSuperHighEffBJetTags = process.trackCountingSuperHighEffB
     tagInfos = cms.VInputTag(cms.InputTag("MyImpactParameterPFTagInfos"))
 )
 
+process.MyTrackCountingHighPurBJetTags = process.trackCountingHighPurBJetTags.clone(
+    tagInfos = cms.VInputTag(cms.InputTag("MyImpactParameterPFTagInfos"))
+)
+
 process.load("BTagTutorial.Exercise1.trackCountingSuperHighPurBJetTags_cfi")
 process.MyTrackCountingSuperHighPurBJetTags = process.trackCountingSuperHighPurBJetTags.clone(
     tagInfos = cms.VInputTag(cms.InputTag("MyImpactParameterPFTagInfos"))
@@ -87,12 +91,17 @@ process.MybTagValidation = process.bTagValidation.clone(
   cms.PSet(
             process.bTagTrackCountingAnalysisBlock,
             label = cms.InputTag("MyTrackCountingSuperHighEffBJetTags"),
-            folder = cms.string("SCTCHE")
+            folder = cms.string("TCSHE")
+        ),
+  cms.PSet(
+            process.bTagTrackCountingAnalysisBlock,
+            label = cms.InputTag("MyTrackCountingHighPurBJetTags"),
+            folder = cms.string("TCHP")
         ),
   cms.PSet(
             process.bTagTrackCountingAnalysisBlock,
             label = cms.InputTag("MyTrackCountingSuperHighPurBJetTags"),
-            folder = cms.string("SCTCHE")
+            folder = cms.string("TCSHP")
         ),
   cms.PSet(
             process.bTagSimpleSVAnalysisBlock,
@@ -118,6 +127,7 @@ process.plots = cms.Path(
     process.MyTrackCountingHighEffBJetTags *
     process.MyShrinkConeTrackCountingHighEffBJetTags *
     process.MyTrackCountingSuperHighEffBJetTags *
+    process.MyTrackCountingHighPurBJetTags *
     process.MyTrackCountingSuperHighPurBJetTags *
     process.MySimpleSecondaryVertexHighEffBJetTags *
     process.myPartons *

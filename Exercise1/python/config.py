@@ -55,6 +55,15 @@ process.MySimpleSecondaryVertexHighEffBJetTags = process.simpleSecondaryVertexHi
     tagInfos = cms.VInputTag(cms.InputTag("MySecondaryVertexTagInfos"))
 )
 
+process.MyPimpedSecondaryVertexTagInfos = process.secondaryVertexTagInfos.clone(
+    trackIPTagInfos = cms.InputTag("MyImpactParameterPFTagInfos")
+)
+process.MyPimpedSecondaryVertexTagInfos.vertexCuts.maxDeltaRToVtxMomentum = 0.1
+
+process.MyPimpedSecondaryVertexHighEffBJetTags = process.simpleSecondaryVertexHighEffBJetTags.clone(
+    tagInfos = cms.VInputTag(cms.InputTag("MyPimpedSecondaryVertexTagInfos"))
+)
+
 ##################################################### Ex: Performance Plots ###
 process.load("PhysicsTools.JetMCAlgos.CaloJetsMCFlavour_cfi")
 
@@ -107,6 +116,11 @@ process.MybTagValidation = process.bTagValidation.clone(
             process.bTagSimpleSVAnalysisBlock,
             label = cms.InputTag("MySimpleSecondaryVertexHighEffBJetTags"),
             folder = cms.string("SimpleSVHE")
+        ),
+  cms.PSet(
+            process.bTagSimpleSVAnalysisBlock,
+            label = cms.InputTag("MyPimpedSecondaryVertexHighEffBJetTags"),
+            folder = cms.string("PimpedSVHE")
         )
   )
 )
@@ -124,12 +138,14 @@ process.plots = cms.Path(
     process.MyAk5PFJetTracksAssociatorAtVertex *
     process.MyImpactParameterPFTagInfos *
     process.MySecondaryVertexTagInfos *
+    process.MyPimpedSecondaryVertexTagInfos *
     process.MyTrackCountingHighEffBJetTags *
     process.MyShrinkConeTrackCountingHighEffBJetTags *
     process.MyTrackCountingSuperHighEffBJetTags *
     process.MyTrackCountingHighPurBJetTags *
     process.MyTrackCountingSuperHighPurBJetTags *
     process.MySimpleSecondaryVertexHighEffBJetTags *
+    process.MyPimpedSecondaryVertexHighEffBJetTags *
     process.myPartons *
     process.AK5PFbyRef *
     process.AK5PFbyValAlgo *

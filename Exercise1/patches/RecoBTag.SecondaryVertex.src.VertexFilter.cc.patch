@@ -1,0 +1,27 @@
+diff --git a/RecoBTag/SecondaryVertex/src/VertexFilter.cc b/RecoBTag/SecondaryVertex/src/VertexFilter.cc
+index 5d5afe1..4dbb3bd 100644
+--- a/RecoBTag/SecondaryVertex/src/VertexFilter.cc
++++ b/RecoBTag/SecondaryVertex/src/VertexFilter.cc
+@@ -33,6 +33,7 @@ VertexFilter::VertexFilter(const edm::ParameterSet &params) :
+ 	distSig3dMin(params.getParameter<double>("distSig3dMin")),
+ 	distSig3dMax(params.getParameter<double>("distSig3dMax")),
+ 	maxDeltaRToJetAxis(params.getParameter<double>("maxDeltaRToJetAxis")),
++	maxDeltaRToVtxMomentum(params.getParameter<double>("maxDeltaRToVtxMomentum")),
+ 	v0Filter(params.getParameter<edm::ParameterSet>("v0Filter"))
+ {
+ }
+@@ -94,6 +95,14 @@ bool VertexFilter::operator () (const Vertex &pv,
+ 						> std::abs(maxDeltaRToJetAxis))
+ 		return false;
+ 
++	// SV direction vs SV momentum filter
++
++	if (Geom::deltaR(
++	        sv.position() - pv.position(),
++            sv.p4(0., minTrackWeight)
++	    ) > std::abs(maxDeltaRToVtxMomentum))
++		return false;
++
+ 	// compute fourvector sum of tracks as vertex and cut on inv. mass
+ 
+ 	TrackKinematics kin(sv);

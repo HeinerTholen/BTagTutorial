@@ -1,0 +1,12 @@
+diff --git a/RecoBTag/SecondaryVertex/python/vertexCuts_cfi.py b/RecoBTag/SecondaryVertex/python/vertexCuts_cfi.py
+index d37259b..33fc937 100644
+--- a/RecoBTag/SecondaryVertex/python/vertexCuts_cfi.py
++++ b/RecoBTag/SecondaryVertex/python/vertexCuts_cfi.py
+@@ -7,6 +7,7 @@ vertexCutsBlock = cms.PSet(
+ 		distVal2dMax = cms.double(2.5),
+ 		useTrackWeights = cms.bool(True),
+ 		maxDeltaRToJetAxis = cms.double(0.5),
++		maxDeltaRToVtxMomentum = cms.double(99999.9),
+ 		v0Filter = cms.PSet(k0sMassWindow = cms.double(0.05)),
+ 		distSig2dMin = cms.double(3.0),
+ 		multiplicityMin = cms.uint32(2),

@@ -1,8 +1,8 @@
 diff --git a/RecoBTag/ImpactParameter/python/impactParameter_cff.py b/RecoBTag/ImpactParameter/python/impactParameter_cff.py
-index 5f6a056..dda1fa5 100644
+index 5f6a056..d5c1af5 100644
 --- a/RecoBTag/ImpactParameter/python/impactParameter_cff.py
 +++ b/RecoBTag/ImpactParameter/python/impactParameter_cff.py
-@@ -46,3 +46,13 @@ from RecoBTag.ImpactParameter.positiveOnlyJetProbabilityComputer_cfi import *
+@@ -46,3 +46,16 @@ from RecoBTag.ImpactParameter.positiveOnlyJetProbabilityComputer_cfi import *
  from RecoBTag.ImpactParameter.positiveOnlyJetProbabilityJetTags_cfi import *
  
  
@@ -11,6 +11,9 @@ index 5f6a056..dda1fa5 100644
 +
 +from BTagTutorial.Exercise1.shrinkConeTrackCounting3D2ndComputer_cfi import *
 +from BTagTutorial.Exercise1.shrinkConeTrackCountingHighEffBJetTags_cfi import *
++
++from BTagTutorial.Exercise1.sumTrackCounting3DComputer_cfi import *
++from BTagTutorial.Exercise1.sumTrackCountingBJetTags_cfi import *
 +
 +from RecoBTag.ImpactParameter.trackCounting3D1stComputer_cfi import *
 +from BTagTutorial.Exercise1.trackCounting3D4thComputer_cfi import *

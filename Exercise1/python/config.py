@@ -33,6 +33,11 @@ process.MyShrinkConeTrackCountingHighEffBJetTags = process.shrinkConeTrackCounti
     tagInfos = cms.VInputTag(cms.InputTag("MyImpactParameterPFTagInfos"))
 )
 
+process.load("BTagTutorial.Exercise1.sumTrackCountingBJetTags_cfi")
+process.MySumTrackCountingBJetTags = process.sumTrackCountingBJetTags.clone(
+    tagInfos = cms.VInputTag(cms.InputTag("MyImpactParameterPFTagInfos"))
+)
+
 process.load("BTagTutorial.Exercise1.trackCountingSuperHighEffBJetTags_cfi")
 process.MyTrackCountingSuperHighEffBJetTags = process.trackCountingSuperHighEffBJetTags.clone(
     tagInfos = cms.VInputTag(cms.InputTag("MyImpactParameterPFTagInfos"))
@@ -99,6 +104,11 @@ process.MybTagValidation = process.bTagValidation.clone(
         ),
   cms.PSet(
             process.bTagTrackCountingAnalysisBlock,
+            label = cms.InputTag("MySumTrackCountingBJetTags"),
+            folder = cms.string("STCHE")
+        ),
+  cms.PSet(
+            process.bTagTrackCountingAnalysisBlock,
             label = cms.InputTag("MyTrackCountingSuperHighEffBJetTags"),
             folder = cms.string("TCSHE")
         ),
@@ -141,6 +151,7 @@ process.plots = cms.Path(
     process.MyPimpedSecondaryVertexTagInfos *
     process.MyTrackCountingHighEffBJetTags *
     process.MyShrinkConeTrackCountingHighEffBJetTags *
+    process.MySumTrackCountingBJetTags *
     process.MyTrackCountingSuperHighEffBJetTags *
     process.MyTrackCountingHighPurBJetTags *
     process.MyTrackCountingSuperHighPurBJetTags *
@@ -153,14 +164,14 @@ process.plots = cms.Path(
     process.dqmSaver
 )
 
-process.out = cms.OutputModule("PoolOutputModule",
-    outputCommands = cms.untracked.vstring('keep *'),
-    fileName = cms.untracked.string('/afs/desy.de/user/t/tholenhe/xxl-af-cms/samples/bTagTutOut.root')
-)
+#process.out = cms.OutputModule("PoolOutputModule",
+#    outputCommands = cms.untracked.vstring('keep *'),
+#    fileName = cms.untracked.string('/afs/desy.de/user/t/tholenhe/xxl-af-cms/samples/bTagTutOut.root')
+#)
 
-process.output = cms.EndPath(
-    process.out
-)
+#process.output = cms.EndPath(
+#    process.out
+#)
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(

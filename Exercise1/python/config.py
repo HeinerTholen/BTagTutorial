@@ -164,6 +164,13 @@ process.plots = cms.Path(
     process.dqmSaver
 )
 
+######################################################################## io ###
+process.source = cms.Source("PoolSource",
+    fileNames = cms.untracked.vstring(
+      "file:/afs/desy.de/user/t/tholenhe/xxl-af-cms/samples/syncExercise53.root"
+    )
+)
+
 #process.out = cms.OutputModule("PoolOutputModule",
 #    outputCommands = cms.untracked.vstring('keep *'),
 #    fileName = cms.untracked.string('/afs/desy.de/user/t/tholenhe/xxl-af-cms/samples/bTagTutOut.root')
@@ -172,9 +179,3 @@ process.plots = cms.Path(
 #process.output = cms.EndPath(
 #    process.out
 #)
-
-process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring(
-      "file:/afs/desy.de/user/t/tholenhe/xxl-af-cms/samples/syncExercise53.root"
-    )
-)
